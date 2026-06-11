@@ -44,4 +44,11 @@ public class EmployeeController {
         EmployeeDTO employeeDTO = employeeService.getEmployeeDetails(employeeId);
         return new CommonResponse(OPERATION_SUCCESS, employeeDTO, SUCCESS_MESSAGE);
     }
+
+    @PostMapping(value = "/update",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse updateEmployeeDetails(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("EmployeeController - updateEmployeeDetails() called with employeeId: {}", employeeDTO.getEmployeeId());
+        EmployeeDTO updatedEmployeeDTO = employeeService.updateEmployeeDetails(employeeDTO);
+        return new CommonResponse(OPERATION_SUCCESS, updatedEmployeeDTO, SUCCESS_MESSAGE);
+    }
 }
