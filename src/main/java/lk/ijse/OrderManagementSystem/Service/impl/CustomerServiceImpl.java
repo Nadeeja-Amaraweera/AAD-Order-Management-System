@@ -2,7 +2,11 @@ package lk.ijse.OrderManagementSystem.Service.impl;
 
 import lk.ijse.OrderManagementSystem.DTO.CustomerDTO;
 import lk.ijse.OrderManagementSystem.DTO.FilterOrderDTO;
+import lk.ijse.OrderManagementSystem.DTO.ItemDTO;
 import lk.ijse.OrderManagementSystem.Entity.Customer;
+import lk.ijse.OrderManagementSystem.Entity.Item;
+import lk.ijse.OrderManagementSystem.Entity.Order;
+import lk.ijse.OrderManagementSystem.Entity.OrderItem;
 import lk.ijse.OrderManagementSystem.Repository.CustomerRepository;
 import lk.ijse.OrderManagementSystem.Service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
@@ -107,6 +111,42 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Override
     public List<FilterOrderDTO> getCustomerOrders(long customerId) {
-        return List.of();
+        try {
+
+            Optional<Customer> customerOptional = customerRepository.findById(customerId);
+            if (!customerOptional.isPresent()) {
+                throw new RuntimeException("Customer not found with ID: " + customerId);
+            }
+            Customer customer = customerOptional.get();
+
+            List<FilterOrderDTO> responseList = new ArrayList<>();
+
+            List<Order> orderList = customer.getOrdersList();
+
+            for (Order order : orderList) {
+                FilterOrderDTO filterOrderDTO = new FilterOrderDTO();
+                filterOrderDTO.setOrderId(order.getOrderId());
+
+                List<ItemDTO> itemDTOList = new ArrayList<>();
+
+                List<OrderItem> orderItemList = order.getOrderItems();
+
+                for (OrderItem orderItem : orderItemList) {
+                    Item item = orderItem.getItems();
+
+                    ItemDTO itemDTO = new ItemDTO();
+                    itemDTO.setItemId(item.getItemId());
+                    itemDTO.setItemName(item.getItemName());
+                    item.setUnitPrice(item.getUnitPrice());
+
+                    itemDTOList.add(itemDTO);
+                }
+                filterOrderDTO.setItemDTOList(itemDTOList);
+                responseList.add(filterOrderDTO);
+            }
+            return responseList;
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -14,7 +14,7 @@ import static lk.ijse.OrderManagementSystem.Constant.ResponseMessage.SUCCESS_MES
 import static lk.ijse.OrderManagementSystem.Constant.ResponseStatusCode.OPERATION_SUCCESS;
 
 @RestController
-@RequestMapping("/vi/api/orders")
+@RequestMapping("/v1/api/orders")
 @Slf4j
 public class OrderController {
 

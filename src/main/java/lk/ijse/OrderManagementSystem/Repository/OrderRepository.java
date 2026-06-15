@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Long> {
-    @Query(value = "SELECT * FROM orders o "+
-            "JOIN customer c ON o.customer_customer_id = c.customer_id ", nativeQuery = true)
+    @Query(value = "SELECT  * FROM orders o "+
+            "JOIN customer c ON o.customer_customer_id = c.customer_id  WHERE c.customer_name = :customerName", nativeQuery = true)
     List<Order> filterOrders(String customerName);
 }

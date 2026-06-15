@@ -51,12 +51,15 @@ public class OrderItemImpl implements OrderItemService {
             order.setTotalAmount(placeOrderDTO.getTotal());
 
             Optional<Customer> optionalCustomer = customerRepository.findById(placeOrderDTO.getCustomerId());
-            if (!optionalCustomer.isEmpty()) {
+            log.info("Customer lookup for ID: {} - Found: {}", placeOrderDTO.getCustomerId(), optionalCustomer.isPresent());
+            if (optionalCustomer.isEmpty()) {
                 throw new RuntimeException("Customer not found with ID: " + placeOrderDTO.getCustomerId());
             }
 
             Customer customer = optionalCustomer.get();
             order.setCustomer(customer);
+
+            log.info("debug customer error");
 
             Order saveOrder = orderRepository.save(order);
             log.info("Order saved with ID: {}", saveOrder.getOrderId());

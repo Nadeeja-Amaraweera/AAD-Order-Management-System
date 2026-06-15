@@ -2,6 +2,7 @@ package lk.ijse.OrderManagementSystem.Controller;
 
 import lk.ijse.OrderManagementSystem.Constant.CommonResponse;
 import lk.ijse.OrderManagementSystem.DTO.CustomerDTO;
+import lk.ijse.OrderManagementSystem.DTO.FilterOrderDTO;
 import lk.ijse.OrderManagementSystem.Service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -49,5 +50,12 @@ public class CustomerController {
         log.info("CustomerController - updateCustomer() called");
         CustomerDTO customerDTO1 = customerService.updateCustomer(customerDTO);
         return new CommonResponse(OPERATION_SUCCESS, customerDTO1, SUCCESS_MESSAGE);
+    }
+
+    @GetMapping(value = "/orders/{customerId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getCustomerOrders(@PathVariable long customerId) {
+        log.info("CustomerController - getCustomerOrders() called with Customer ID: {}", customerId);
+        List<FilterOrderDTO> filterOrderDTOS = customerService.getCustomerOrders(customerId);
+        return new CommonResponse(OPERATION_SUCCESS, filterOrderDTOS, SUCCESS_MESSAGE);
     }
 }
