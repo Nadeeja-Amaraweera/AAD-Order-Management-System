@@ -1,6 +1,7 @@
 package lk.ijse.OrderManagementSystem.Service.impl;
 
 import lk.ijse.OrderManagementSystem.DTO.CustomerDTO;
+import lk.ijse.OrderManagementSystem.DTO.FilterOrderDTO;
 import lk.ijse.OrderManagementSystem.Entity.Customer;
 import lk.ijse.OrderManagementSystem.Repository.CustomerRepository;
 import lk.ijse.OrderManagementSystem.Service.CustomerService;
@@ -103,5 +104,9 @@ public class CustomerServiceImpl implements CustomerService {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
+    }
+    @Override
+    public List<FilterOrderDTO> getCustomerOrders(long customerId) {
+        return List.of();
     }
 }
