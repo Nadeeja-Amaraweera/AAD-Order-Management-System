@@ -19,5 +19,5 @@ public class Item {
     private double unitPrice;
 
     @OneToMany(mappedBy = "items",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    List<OrderItem> orderItems;
+    private List<OrderItem> orderItems;
 }
