@@ -68,7 +68,7 @@ public class OrderItemImpl implements OrderItemService {
                 OrderItem orderItem = new OrderItem();
 
                 Optional<Item> optionalItem = itemRepository.findById(itemId);
-                if (!optionalCustomer.isPresent()) {
+                if (optionalItem.isEmpty()) {
                     throw new RuntimeException("Item not found with ID: " + itemId);
                 }
 
