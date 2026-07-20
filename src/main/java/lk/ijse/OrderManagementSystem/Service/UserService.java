@@ -5,4 +5,6 @@ import lk.ijse.OrderManagementSystem.DTO.UserDTO;
 public interface UserService {
 
     UserDTO saveUser(UserDTO userDTO);
+
+    UserDTO getUserDetails(String username, String password);
 }

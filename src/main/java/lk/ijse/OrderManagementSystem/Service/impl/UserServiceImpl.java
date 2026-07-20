@@ -7,6 +7,8 @@ import lk.ijse.OrderManagementSystem.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -33,5 +35,15 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public UserDTO getUserDetails(String username, String password) {
+        Optional<User> optionalUser = userRepository.findByUserNameAndPassword(username,password);
+        if(optionalUser.isEmpty())
+            throw new RuntimeException("Sorry no user");
+
+        User user = optionalUser.get();
+        return new UserDTO(user.getUserId(),user.getUserName(),user.getUserRoles(),user.getPassword());
     }
 }
