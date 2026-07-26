@@ -18,4 +18,10 @@ public class UserDTO {
         this.userName = userName;
         this.password = password;
     }
+
+    public UserDTO(long userId, String userName, String userRoles) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userRoles = userRoles;
+    }
 }

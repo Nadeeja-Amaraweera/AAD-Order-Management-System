@@ -27,7 +27,6 @@ public class UserController {
         UserDTO userDetails = userService.getUserDetails(authDTO.getUserName(), authDTO.getPassword());
         System.out.println("API called here");
         String token = jwtUtil.generateToken(userDetails);
-
         UserDataDTO userDataDTO = new UserDataDTO();
         userDataDTO.setUserId(userDetails.getUserId());
         userDataDTO.setToken(token);
@@ -38,5 +37,10 @@ public class UserController {
     public CommonResponse registerUser(@RequestBody UserDTO userDTO) {
         UserDTO saveUser = userService.saveUser(userDTO);
         return new CommonResponse(OPERATION_SUCCESS,saveUser,SUCCESS_MESSAGE);
+    }
+
+    @GetMapping(value = "/get-all",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getAllUsers() {
+        return new CommonResponse(OPERATION_SUCCESS, userService.getAllUsers(), SUCCESS_MESSAGE);
     }
 }

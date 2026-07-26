@@ -7,6 +7,7 @@ import lk.ijse.OrderManagementSystem.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,5 +46,11 @@ public class UserServiceImpl implements UserService {
 
         User user = optionalUser.get();
         return new UserDTO(user.getUserId(),user.getUserName(),user.getUserRoles(),user.getPassword());
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> allUsers = userRepository.getAllUsers();
+        return allUsers;
     }
 }
