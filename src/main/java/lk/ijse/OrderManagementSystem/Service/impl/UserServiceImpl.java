@@ -39,6 +39,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO editUser(UserDTO userDTO) {
+        log.info("Editing user: {}", userDTO);
+        try {
+            Optional<User> optionalUser = userRepository.findById(userDTO.getUserId());
+            if (!optionalUser.isPresent()) {
+                throw new RuntimeException("User not found");
+            }
+            User user = optionalUser.get();
+            user.setUserId(userDTO.getUserId());
+            user.setUserName(userDTO.getUserName());
+            user.setUserRoles(userDTO.getUserRoles());
+
+            User updatedUser = userRepository.save(user);
+            log.info("User updated successfully: {}", updatedUser);
+            return new UserDTO(updatedUser.getUserId(), updatedUser.getUserName(), updatedUser.getUserRoles());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public UserDTO getUserDetails(String username, String password) {
         Optional<User> optionalUser = userRepository.findByUserNameAndPassword(username,password);
         if(optionalUser.isEmpty())

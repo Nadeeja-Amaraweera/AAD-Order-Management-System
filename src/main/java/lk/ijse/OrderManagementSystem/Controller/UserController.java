@@ -43,4 +43,10 @@ public class UserController {
     public CommonResponse getAllUsers() {
         return new CommonResponse(OPERATION_SUCCESS, userService.getAllUsers(), SUCCESS_MESSAGE);
     }
+
+    @PutMapping(value = "/edit",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse editUser(@RequestBody UserDTO userDTO) {
+        UserDTO editedUser = userService.editUser(userDTO);
+        return new CommonResponse(OPERATION_SUCCESS,editedUser,SUCCESS_MESSAGE);
+    }
 }

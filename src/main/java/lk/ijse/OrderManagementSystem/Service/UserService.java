@@ -9,6 +9,8 @@ public interface UserService {
 
     UserDTO saveUser(UserDTO userDTO);
 
+    UserDTO editUser(UserDTO userDTO);
+
     UserDTO getUserDetails(String username, String password);
 
     List<UserDTO> getAllUsers();
