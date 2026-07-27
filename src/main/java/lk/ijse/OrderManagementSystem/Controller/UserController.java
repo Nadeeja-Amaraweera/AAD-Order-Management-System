@@ -49,4 +49,10 @@ public class UserController {
         UserDTO editedUser = userService.editUser(userDTO);
         return new CommonResponse(OPERATION_SUCCESS,editedUser,SUCCESS_MESSAGE);
     }
+
+    @DeleteMapping(value = "/delete/{userId}")
+    public CommonResponse deleteUser(@PathVariable long userId) {
+        userService.deleteUser(userId);
+        return new CommonResponse(OPERATION_SUCCESS, null, SUCCESS_MESSAGE);
+    }
 }

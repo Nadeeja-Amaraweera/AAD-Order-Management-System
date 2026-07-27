@@ -2,6 +2,7 @@ package lk.ijse.OrderManagementSystem.Service.impl;
 
 import lk.ijse.OrderManagementSystem.DTO.UserDTO;
 import lk.ijse.OrderManagementSystem.Entity.User;
+import lk.ijse.OrderManagementSystem.Exception.CustomeException;
 import lk.ijse.OrderManagementSystem.Repository.UserRepository;
 import lk.ijse.OrderManagementSystem.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
         log.info("Saving user: {}", userDTO);
-        try {
+
+        if (userDTO.getUserRoles().equals("")) {
+            throw new CustomeException(404,"Cannot create user with ADMIN role");
+        }
             User user = new User();
             user.setUserName(userDTO.getUserName());
             user.setPassword(userDTO.getPassword());
@@ -33,9 +37,6 @@ public class UserServiceImpl implements UserService {
             log.info("User saved successfully: {}", saveUser);
             return new UserDTO(saveUser.getUserId(), saveUser.getUserName(), saveUser.getPassword(),saveUser.getUserRoles());
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -73,5 +74,21 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> getAllUsers() {
         List<UserDTO> allUsers = userRepository.getAllUsers();
         return allUsers;
+    }
+
+    @Override
+    public void deleteUser(long userId) {
+        log.info("Deleting user: {}", userId);
+        try {
+
+            Optional<User> optionalUser = userRepository.findById(userId);
+            if (!optionalUser.isPresent()) {
+                throw new RuntimeException("User not found");
+            }
+            userRepository.delete(optionalUser.get());
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 }

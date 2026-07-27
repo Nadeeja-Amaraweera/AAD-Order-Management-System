@@ -37,7 +37,7 @@ public class SecurityConfig {
 //                        .requestMatchers(HttpMethod.GET, "/v1/api/users/get-all").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/api/users/login").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/v1/api/users/edit").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.POST, "/v1/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/api/users/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
