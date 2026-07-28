@@ -16,6 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUserNameAndPassword(String username, String password);
 
-    @Query("SELECT new lk.ijse.OrderManagementSystem.DTO.UserDTO(u.userId, u.userName, u.userRoles) FROM User u")
+    @Query("SELECT new lk.ijse.OrderManagementSystem.DTO.UserDTO(u.userId, u.userName, u.userRoles, u.userStatus) FROM User u")
     List<UserDTO> getAllUsers();
 }
